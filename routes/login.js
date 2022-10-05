@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var oracledb = require('oracledb');
+const {
+    ORACLE_CONFIG
+} = require("../config/db");
 
 //로그인 페이지로 이동
 router.get('/', (req, res) => {
@@ -12,7 +16,8 @@ router.get('/', (req, res) => {
 //로그인
 router.post('/login', async (req, res) => {
   const auth = req.body.loginId
-
+  result = await selectDatabase();
+  console.log(result)
 console.log(auth)
   if (auth == 'admin') {
       if (req.session.user) {
@@ -51,4 +56,31 @@ router.get('/logout', async (req, res) => {
   }
 });
 
+
+//select
+async function selectDatabase() {
+
+    console.log("!!!!! db conenction !!!!!");
+
+    let connection = await oracledb.getConnection(ORACLE_CONFIG);
+
+    let binds = {};
+    let options = {
+        outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
+      };
+
+    console.log("!!!!! db select !!!!!");
+
+    let result = await connection.execute("select * from dictionary", binds, options);
+
+    console.log("!!!!! db response !!!!!");
+    // console.log(result.rows);
+
+    console.log("!!!!! db close !!!!!");
+    // console.log(result)
+    
+    await connection.close();
+    
+    return result.rows[0]
+}
 module.exports = router;

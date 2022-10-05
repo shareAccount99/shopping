@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+var oracledb = require('oracledb');
+oracledb.autoCommit = true;
 
 var shopRouter = require('./routes/index');
 

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var oracledb = require('oracledb');
 
 const login = require('./login');
 const product = require('./user/product.js');
