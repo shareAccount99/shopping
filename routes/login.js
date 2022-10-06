@@ -60,8 +60,6 @@ router.get('/logout', async (req, res) => {
 //select
 async function selectDatabase() {
 
-    console.log("!!!!! db conenction !!!!!");
-
     let connection = await oracledb.getConnection(ORACLE_CONFIG);
 
     let binds = {};
@@ -69,15 +67,9 @@ async function selectDatabase() {
         outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
       };
 
-    console.log("!!!!! db select !!!!!");
-
     let result = await connection.execute("select * from dictionary", binds, options);
 
-    console.log("!!!!! db response !!!!!");
     // console.log(result.rows);
-
-    console.log("!!!!! db close !!!!!");
-    // console.log(result)
     
     await connection.close();
     
