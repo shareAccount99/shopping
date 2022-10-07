@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "ckeditor5": "^35.2.0",
     "connection": "^1.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var oracledb = require('oracledb');
 
 const login = require('./login');
 const product = require('./user/product.js');
 const home = require('./user/home.js');
 const adminMain = require('./admin/main.js');
+const adminInsertProduct = require('./admin/insertProduct.js');
 
 router.use('/', (req,res,next) => {
     if(req.url == '/' || req.url == '/login') {
@@ -31,4 +31,5 @@ router.use('/user/home', home);
 
 // 관리자
 router.use('/admin/main', adminMain);
+router.use('/admin/insertProduct', adminInsertProduct);
 module.exports = router;
