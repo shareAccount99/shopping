@@ -7,7 +7,7 @@ const {
 } = require("../../config/db");
 
 router.get('/', async function(req, res, next) {
-  results = await selectProduct();
+  results = await selectHomeProduct();
   console.log(results)
   res.render('user/home', {
      title: 'home',
@@ -16,16 +16,18 @@ router.get('/', async function(req, res, next) {
 });
 
 //select
-async function selectProduct() {
+async function selectHomeProduct() {
 
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
-
+  let sql = "SELECT * FROM \
+              (SELECT *FROM PRODUCT ORDER BY PRODUCT_DATE DESC) \
+              WHERE ROWNUM <= 5"
   let binds = {};
   let options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
     };
 
-  let result = await connection.execute("select * from product", binds, options);
+  let result = await connection.execute(sql, binds, options);
 
   // console.log(result.rows);
   

@@ -1,91 +1,45 @@
-<!DOCTYPE html>
-<html lang="zxx">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
-
-    <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script> 
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="../../css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="../../css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/style.css" type="text/css">
-</head>
 <style>
-  *{
-    background-color: rgb(155, 250, 100); 
-  }
   p{
     font-size: 1.2rem;
     font-weight: bold;
   }
-  .checkout__input input {
-    color: black !important;
-    font-weight: bold;
-  }
-  .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-      border-color: var(--ck-color-base-border);
-      height: 40%;
-   }
-   .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
-      height: 400px;
-   }
-   .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-      height: 400px;
-   }
 </style>
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
  
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
-                    </h6>
-                </div>
-            </div>
             <div class="checkout__form">
                 <h1>상품 등록</h1>
                 <br><br>
-                <form action="" id="insertProduct" method="post" enctype="multipart/form-data" autocomplete="off">
-                  <input type="hidden" id="content" name="content">  
+                <form action="" id="insertProduct" method="post" enctype="multipart/form-data" autocomplete="off" accept-charset="UTF-8">
+                  <input type="hidden" name="productDetail">  
                   <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="checkout__input">
                                 <p>물품명<span>*</span></p>
-                                <input type="text">
+                                <input type="text" name="productName" required>
                             </div>
                             <div class="checkout__input">
                                 <p>물품설명<span>*</span></p>
-                                <div id="editor" name="editor"></div>
+                                <textarea id="editor" name="editor" required></textarea>
                             </div>
                             <div class="checkout__input">
                                 <p>물품가격<span>*</span></p>
-                                <input type="text">
+                                <input type="number" name="productPrice" required>
                             </div>
                             <div class="checkout__input">
                                 <p>물품분류<span>*</span></p>
-                                <input type="number">
+                                <input type="text" name="productDiv" required>
                             </div> 
+                            <div class="checkout__input">
+                              <p>물품수량<span>*</span></p>
+                              <input type="number" name="productCount" required>
+                            </div>
+                            <div class="checkout__input">
+                              <p>대표이미지<span>*</span></p>
+                              <input type="file" name="file" id="file">
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -94,49 +48,22 @@
         </div>
     </section>
     <!-- Checkout Section End -->
-
-    <!-- Js Plugins -->
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/jquery.nice-select.min.js"></script>
-    <script src="../../js/jquery-ui.min.js"></script>
-    <script src="../../js/jquery.slicknav.js"></script>
-    <script src="../../js/mixitup.min.js"></script>
-    <script src="../../js/owl.carousel.min.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="https://cdn.ckeditor.com/4.20.0/basic/ckeditor.js"></script>
     
-
- 
-
     <script>
-      $(document).ready(function () {
+        window.onload = function(){
         //ckeditor
-        ClassicEditor
-        .create(document.querySelector('#editor'), {
-            language: 'ko'
-         })
-         .then(newEditor => {
-            editor = newEditor;
-         })
-         .catch(error => {
-            console.error(error);
-        });
-
-        var content = editor.getData();
+        var editor = CKEDITOR.replace( 'editor' );
         $("#insert_btn").click(function () {
+          var content = editor.getData()
           if (confirm("등록하시겠습니까?") == true) {
-                  $('input[name=content]').attr('value', content);
-                  console.log(content);
-                  // $("#insertProduct").attr("action", "insert");
-                  // $("#insertProduct").submit();
+                  $('input[name=productDetail]').attr('value', content);
+                  $("#insertProduct").attr("action", "insertProduct/insert");
+                  $("#insertProduct").submit();
           } else {
             return;
           };
         });
-      });
-
+      }
     </script>
 </body>
-</html>
-
-
