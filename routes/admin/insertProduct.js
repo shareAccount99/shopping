@@ -56,8 +56,9 @@ router.post('/insert', upload.single('file'), async function(req, res, next) {
 async function insertProduct(param) {
   // console.log(param)
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
-  var sql = "INSERT INTO PRODUCT(PRODUCT_ID, PRODUCT_NAME, PRODUCT_IMG, PRODUCT_PRICE, PRODUCT_DETAIL, PRODUCT_COUNT, PRODUCT_DIV)\
-               values((SELECT MAX(PRODUCT_ID)+1 FROM PRODUCT), :name, :path, :price, :detail, :count, :div) "
+  var sql = "INSERT INTO PRODUCT(PRODUCT_ID, PRODUCT_NAME, PRODUCT_IMG, \
+              PRODUCT_PRICE, PRODUCT_DETAIL, PRODUCT_COUNT, PRODUCT_DIV, PRODUCT_DATE)\
+               values((SELECT MAX(PRODUCT_ID)+1 FROM PRODUCT), :name, :path, :price, :detail, :count, :div, TO_CHAR(SYSDATE,'yyyy-MM-dd HH:mi:ss')) "
   let options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
     };

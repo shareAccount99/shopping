@@ -50,6 +50,9 @@ app.use(function (req, res, next) {
   if (req.session.user) {
     global.sessionName = req.session.user.sessionName;
     global.sessionEmail = req.session.user.sessionEmail;
+  } else{
+    global.sessionName = undefined;
+    global.sessionEmail = undefined;
   }
   next();
 });
