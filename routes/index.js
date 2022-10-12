@@ -2,14 +2,20 @@ var express = require('express');
 var router = express.Router();
 
 const login = require('./login');
-const product = require('./user/product.js');
+
+//회원
 const home = require('./user/home.js');
+const product = require('./user/product.js');
+const productDetail = require('./user/productDetail.js');
+
+//관리자
 const adminMain = require('./admin/main.js');
 const adminInsertProduct = require('./admin/insertProduct.js');
 
 router.use('/', (req,res,next) => {
-    if(req.url == '/' || req.url == '/login' || '/user/home') {
-        // console.log("세션 검사 하지않는 페이지")
+    console.log(req.url)
+    if(req.url == '/' || req.url == '/login' || req.url == '/user/home') {
+        console.log("세션 검사 하지않는 페이지")
         next();
     } else {                                            // 로그인 페이지 이외의 페이지에 진입하려고 하는 경우
         if(req.session.user) {
@@ -26,8 +32,9 @@ router.use('/', (req,res,next) => {
 router.use('/', login);
 
 // 회원
-router.use('/user/product', product);
 router.use('/user/home', home);
+router.use('/user/product', product);
+router.use('/user/productDetail', productDetail);
 
 // 관리자
 router.use('/admin/main', adminMain);

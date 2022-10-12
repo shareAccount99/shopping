@@ -27,14 +27,14 @@
                     <div class="featured__item">
                         <div class="featured__item__pic ">
                             <img src="../../<%=results[i].PRODUCT_IMG%>" width="100%">
-                            <ul class="featured__item__pic__hover">
+                            <!-- <ul class="featured__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#"><%=productList[i].PRODUCT_NAME%></a></h6>
+                            <h6><a href="productDetail?productId=<%=productList[i].PRODUCT_ID%>"><%=productList[i].PRODUCT_NAME%></a></h6>
                             <h5><%=productList[i].PRODUCT_PRICE%></h5>
                         </div>
                     </div>

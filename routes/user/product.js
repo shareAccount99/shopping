@@ -17,10 +17,6 @@ router.get('/', async function(req, res, next) {
     });
 });
 
-router.get('/detail', function(req, res, next) {
-  res.render('user/productDetail');
-});
-
 //select
 async function selectProductList(productDiv, searchText) {
 
