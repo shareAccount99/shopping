@@ -45,14 +45,24 @@ router.get('/', function(req, res, next) {
   });
 
 // 물건 등록
-router.post('/insert', upload.single('file'), async function(req, res, next) {
-  const param = [req.body.productName, req.file.path, req.body.productPrice, req.body.productDetail, req.body.productCount, req.body.productDiv]
-  // console.log(req.file.path);
+router.post('/insert', upload.array('file'), async function(req, res, next) {
+  //파일이 저장된 경로
+  const paths = req.files.map(data => data.path);
+  //파일 원본이름
+  const orgName = req.files.map(data => data.originalname);
+  
+  // paths[0] = 첫번째 파일 : 대표이미지
+  const param = [req.body.productName, paths[0], req.body.productPrice, req.body.productDetail, req.body.productCount, req.body.productDiv]
   await insertProduct(param)
+
+  for (let i = 1; i < paths.length; i++) {
+    const param2 = [paths[i], i, orgName[i], path.extname(paths[i])];
+    await insertFile(param2)
+};
   res.send("<script>alert('정상적으로 등록이 완료되었습니다.');location.href='/admin/main'</script>");
 });
     
-//insert
+// 상품 등록
 async function insertProduct(param) {
   // console.log(param)
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
@@ -68,4 +78,18 @@ async function insertProduct(param) {
 
 }
 
+// 상품 추가 파일 등록
+async function insertFile(param2) {
+  // console.log(param)
+  let connection = await oracledb.getConnection(ORACLE_CONFIG);
+  var sql2 = "INSERT INTO PRODUCTFILE(FILE_ROUTE, FILE_NO, FILE_ORG_NAME, FILE_TYPE, PRODUCT_ID)\
+               values(:fileRoute, :fileNo, :fileOrgName, :fileType, (select MAX(PRODUCT_ID) FROM PRODUCT) ) "
+  let options = {
+      outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
+    };
+  await connection.execute(sql2, param2, options)
+  
+  await connection.close();
+
+}
 module.exports = router;
