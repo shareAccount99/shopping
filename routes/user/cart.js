@@ -9,7 +9,7 @@ const {
 // 장바구니 조회 및 등록
 router.get('/', async function(req, res, next) {
   // 세션에 저장된 유저 정보
-  const userId = req.session.user.sessionId == undefined ? "비회원" : req.session.user.sessionId;
+  const userId = req.session.user.sessionId;
 
   cart = await selectCart(userId);
  
@@ -18,7 +18,7 @@ router.get('/', async function(req, res, next) {
     // 장바구니 생성
     await insertCart(userId);
     // 장바구니 물품 조회
-    await selectCartProduct(userId)
+    cartProduct = await selectCartProduct(userId)
 
   } else{ // 장바구니가 이미 있는 경우
 
