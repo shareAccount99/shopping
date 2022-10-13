@@ -7,7 +7,7 @@ const login = require('./login');
 const home = require('./user/home.js');
 const product = require('./user/product.js');
 const productDetail = require('./user/productDetail.js');
-
+const cart = require('./user/cart.js');
 //관리자
 const adminMain = require('./admin/main.js');
 const adminInsertProduct = require('./admin/insertProduct.js');
@@ -35,7 +35,7 @@ router.use('/', login);
 router.use('/user/home', home);
 router.use('/user/product', product);
 router.use('/user/productDetail', productDetail);
-
+router.use('/user/cart', cart);
 // 관리자
 router.use('/admin/main', adminMain);
 router.use('/admin/insertProduct', adminInsertProduct);

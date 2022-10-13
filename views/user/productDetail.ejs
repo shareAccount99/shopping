@@ -12,16 +12,22 @@
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         <img class="product__details__pic__item--large"
-                            src="../../<%=results[0].PRODUCT_IMG%>" alt="">
+                            src="../../<%=productFile[0].FILE_ROUTE%>" alt="">
                     </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        <% for(i=0; i< productFile.length; i++){%>
+                        <img data-imgbigurl="../../<%=productFile[i].FILE_ROUTE%>"
+                            src="../../<%=productFile[i].FILE_ROUTE%>" alt="">
+                            <%}%>
+                        </div>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
-                    <h3><%=results[0].PRODUCT_NAME%></h3>
-                    <div class="product__details__price"><%=results[0].PRODUCT_PRICE%></div>
-                    <%-results[0].PRODUCT_DETAIL%>
-                    <p>남은수량 : <%=results[0].PRODUCT_COUNT%></p>
+                    <h3><%=productDetail[0].PRODUCT_NAME%></h3>
+                    <div class="product__details__price"><%=productDetail[0].PRODUCT_PRICE%></div>
+                    <%-productDetail[0].PRODUCT_DETAIL%>
+                    <p>남은수량 : <%=productDetail[0].PRODUCT_COUNT%></p>
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">

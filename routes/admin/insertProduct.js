@@ -43,7 +43,6 @@ router.get('/', function(req, res, next) {
        title: '관리자' 
       });
   });
-
 // 물건 등록
 router.post('/insert', upload.array('file'), async function(req, res, next) {
   //파일이 저장된 경로
@@ -90,6 +89,6 @@ async function insertFile(param2) {
   await connection.execute(sql2, param2, options)
   
   await connection.close();
+  }
 
-}
 module.exports = router;
