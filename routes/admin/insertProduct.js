@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var oracledb = require('oracledb');
+oracledb.autoCommit = true;
 const {
     ORACLE_CONFIG
 } = require("../../config/db");
