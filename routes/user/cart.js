@@ -51,7 +51,7 @@ async function insertCart(userId) {
   // console.log(param)
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
   var sql2 = "INSERT INTO CART(cart_id, user_id)\
-               values( (select NVL(MAX(PRODUCT_ID),0)+1 FROM CART), :id) "
+               values( (select NVL(MAX(CART_ID),0)+1 FROM CART), :id) "
   let options = {
       outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
     };
@@ -66,7 +66,8 @@ async function insertCart(userId) {
     var sql = " select c.*, p.product_name, p.product_img, (c.cartproduct_count * p.product_price) sum_price \
                 from cartproduct c\
                 left join product p on c.product_id = p.product_id\
-                WHERE c.CART_ID = (SELECT CART_ID FROM CART WHERE USER_ID = :id) "
+                WHERE c.CART_ID = (SELECT CART_ID FROM CART WHERE USER_ID = :id) \
+                ORDER BY c.CARTPRODUCT_ID DESC"
     let options = {
         outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
       };

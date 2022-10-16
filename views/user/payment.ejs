@@ -1,0 +1,64 @@
+<style>
+  p{
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+</style>
+<body>
+ 
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h1>결제</h1>
+                <br><br>
+                <form action="" id="payment" method="post" autocomplete="off" accept-charset="UTF-8">
+                  <input type="hidden" name="productCount">  
+                  <input type="hidden" name="orderListPr" value="<%=cart%>"> 
+                  <input type="hidden" name="productDetail"> 
+                  <input type="hidden" name="productDetail"> 
+
+                  <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="checkout__input">
+                                <p>총 결제금액<span> : <%=sumPrice%></span></p>
+                            </div>
+                            <div class="checkout__input">
+                                <p>주소<span>*</span></p>
+                                <input type="text" name="adres" required>
+                            </div> 
+                            <div class="checkout__input">
+                              <p>상세주소<span>*</span></p>
+                              <input type="text" name="adresDetail" required>
+                            </div>
+                            <div class="checkout__input">
+                              <p>연락받을 전화번호<span>*</span></p>
+                              <input type="text" name="orderListPhone" required>
+                          </div> 
+                        </div>
+                    </div>
+                </form>
+                <button class="site-btn" id="insert_btn"> 상품 등록</button>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+    <script src="https://cdn.ckeditor.com/4.20.0/basic/ckeditor.js"></script>
+    
+    <script>
+        window.onload = function(){
+        //ckeditor
+        var editor = CKEDITOR.replace( 'editor' );
+        $("#insert_btn").click(function () {
+          var content = editor.getData()
+          if (confirm("등록하시겠습니까?") == true) {
+                  $('input[name=productDetail]').attr('value', content);
+                  $("#insertProduct").attr("action", "insertProduct/insert");
+                  $("#insertProduct").submit();
+          } else {
+            return;
+          };
+        });
+      }
+    </script>
+</body>
