@@ -10,10 +10,14 @@ const {
 router.post('/', async function(req, res, next) {
   const cartChk = JSON.parse("[" + req.body.cartChk + "]")
   const buyProduct = await selectCartProduct(cartChk)
-  console.log(buyProduct)
-    // res.render('admin/insertProduct', {
-    //    title: '관리자' 
-    //   });
+  var sumPrice = 0;
+  for(i=0; i < buyProduct.length; i++){
+    sumPrice += buyProduct[i].SUM_PRICE;
+  }
+    res.render('user/payment', {
+       buyProduct : buyProduct,
+       sumPrice : sumPrice
+      });
   });
 
 // 결제 후 구매 신청
@@ -30,7 +34,10 @@ async function selectCartProduct(cartChk) {
 
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
   
-  var sql = "SELECT * FROM CARTPRODUCT WHERE CARTPRODUCT_ID = :cartChk "
+  var sql = "SELECT CP.*, P.PRODUCT_NAME, (P.PRODUCT_PRICE * CP.CARTPRODUCT_COUNT) AS SUM_PRICE, P.PRODUCT_IMG \
+            FROM CARTPRODUCT CP LEFT JOIN PRODUCT P \
+            ON CP.PRODUCT_ID = P.PRODUCT_ID \
+           WHERE CARTPRODUCT_ID = :cartChk ";
 
   if(cartChk.length > 1){
 
