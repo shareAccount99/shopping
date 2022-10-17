@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 
   cart = await selectCart(userId);
  
-  if(cart == 0){  // 장바구니가 없을때 
+  if(cart.length == 0){  // 장바구니가 없을때 
 
     // 장바구니 생성
     await insertCart(userId);
