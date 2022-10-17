@@ -8,7 +8,6 @@ const {
 
 // 결제 페이지로 이동
 router.post('/', async function(req, res, next) {
-  // console.log(req.body.cartChk)
   const cartChk = JSON.parse("[" + req.body.cartChk + "]")
   const buyProduct = await selectCartProduct(cartChk)
   console.log(buyProduct)
@@ -28,10 +27,6 @@ router.post('/buyProduct',  async function(req, res, next) {
     
 // 상품 등록
 async function selectCartProduct(cartChk) {
-  var param = []
-    for(i=0; i<cartChk.length; i++){
-      param.push(cartChk[i])
-    }
 
   let connection = await oracledb.getConnection(ORACLE_CONFIG);
   
@@ -49,7 +44,7 @@ async function selectCartProduct(cartChk) {
       outFormat: oracledb.OUT_FORMAT_OBJECT   // query result format
     };
 
-  let result = await connection.execute(sql, param, options)
+  let result = await connection.execute(sql, cartChk, options)
   
   await connection.close();
 

@@ -58,14 +58,16 @@
    window.onload = function(){
      $("#buy_cart").click(function () {
           if (confirm("등록하시겠습니까?") == true) {
+
                 // 체크된 상품 번호 가져오기
                 var chkArr = [];
                 $("input[name=chk]:checked").each(function () {
                     chkArr.push($(this).val());
                 });
                 console.log(chkArr)
+
                 $('#cartChk').val(chkArr);
-                console.log($('#cartChk'));
+                
                   $("#cartForm").attr("action", "payment");
                   $("#cartForm").submit();
           } else {
